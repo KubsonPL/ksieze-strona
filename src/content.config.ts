@@ -49,7 +49,15 @@ const emergency = defineCollection({
   schema: z.object({
     id: z.string(),
     label: z.string().min(1),
-    phone: z.string().optional(),
+    phones: z
+      .array(
+        z.object({
+          note: z.string().min(1).optional(),
+          number: z.string().min(1),
+        }),
+      )
+      .optional()
+      .default([]),
   }),
 });
 

@@ -1,18 +1,27 @@
 - id: numer-alarmowy
   label: Numer alarmowy
-  phone: "112"
+  phones:
+    - number: "112"
 - id: straz-miejska
   label: Straż Miejska
-  phone: "986"
+  phones:
+    - number: "986"
 - id: pogotowie-energetyczne
   label: Pogotowie energetyczne
-  phone: "991"
+  phones:
+    - number: "991"
 - id: pogotowie-gazowe
   label: Pogotowie gazowe
-  phone: "992"
+  phones:
+    - number: "992"
 - id: dzielnicowy
-  label: Dzielnicowy
-  phone: ""
+  label: Dzielnicowy — sierż. Alicja Szot
+  phones:
+    - note: stacjonarny
+      number: "47 87 143 04"
+    - note: kom.
+      number: "601 815 647"
 - id: awarie-wodociagowe
   label: Awarie wodociągowe MPWiK
-  phone: ""
+  phones:
+    - number: "994"

@@ -1,6 +1,5 @@
 ---
 import { getCollection } from "astro:content";
-import { formatPhoneDisplay, formatPhoneHref } from "../utils/phone";
 
 const emergencyNumbers = await getCollection("emergency");
 ---
@@ -11,8 +10,14 @@ const emergencyNumbers = await getCollection("emergency");
     {emergencyNumbers.map(({ data }) => (
       <li>
         <span class="emergency__label">{data.label}</span>
-        {data.phone ? (
-          <a href={`tel:${formatPhoneHref(data.phone)}`}>{formatPhoneDisplay(data.phone)}</a>
+        {data.phones.length > 0 ? (
+          <span class="emergency__numbers">
+            {data.phones.map((p) => (
+              <a href={`tel:${p.number.replace(/\D/g, "")}`}>
+                {p.note && <span class="emergency__note">{p.note}</span>} {p.number}
+              </a>
+            ))}
+          </span>
         ) : (
           <span class="emergency__missing">do uzupełnienia</span>
         )}
@@ -32,13 +37,26 @@ const emergencyNumbers = await getCollection("emergency");
   .emergency__list li {
     display: flex;
     justify-content: space-between;
-    gap: var(--space-3);
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-3);
     padding: var(--space-2) 0;
     border-bottom: 1px solid var(--color-border);
   }
 
   .emergency__label {
     color: var(--color-text-muted);
+  }
+
+  .emergency__numbers {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--space-1);
+  }
+
+  .emergency__note {
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
   }
 
   .emergency__missing {
