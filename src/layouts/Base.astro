@@ -57,8 +57,17 @@ const canonicalUrl = new URL(Astro.url.pathname, siteConfig.siteUrl);
     .site-nav a:hover {
       text-decoration: underline;
     }
+
+    .test-banner {
+      background: var(--color-warning-bg);
+      color: var(--color-warning-text);
+      text-align: center;
+      font-size: 0.85rem;
+      padding: var(--space-1) var(--space-3);
+    }
   </style>
   <body>
+    <p class="test-banner">Strona w wersji testowej. Uwagi zgłaszać do autora lub w komentarzu.</p>
     <nav class="site-nav">
       <div class="container site-nav__inner">
         <a class="site-nav__brand" href="/">{siteConfig.siteName}</a>
