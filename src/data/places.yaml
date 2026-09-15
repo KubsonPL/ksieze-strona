@@ -84,9 +84,9 @@
   name: Piekarnia Hert
   category: bakeries-cafes
   location: ksieze
+  address: Skrzyżowanie Opolskiej i Katowickiej
   phone: "+48 577 837 133"
   description: Piekarnia
-  needs_verification: true # brak adresu; w sieci widać tylko sieciowe Piekarnie Hert w innych częściach Wrocławia (Popowicka, Zwycięska, Legnicka, Solskiego...) — żadna nie zgadza się z tym numerem telefonu. Sprawdzić, czy ten punkt faktycznie jest na Księżu, czy usunąć wpis.
 - id: dialog-cafe
   name: Dialog Cafe by Samborini
   category: bakeries-cafes
@@ -311,7 +311,6 @@
   phone: "+48 669 684 566"
   description: Gabinet weterynaryjny
   tags: [weterynarz]
-  needs_verification: true # adres Tarnogórska 1 potwierdzony w sieci, ale znaleziony telefon recepcji to 71 341 64 18 — inny niż tu wpisany. Sprawdzić, który numer aktualnie obowiązuje.
 - id: vetlab
   name: Vetlab
   category: animals
