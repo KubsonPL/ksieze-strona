@@ -21,14 +21,12 @@
   address: Chorzowska 10
   phone: "+48 71 340 07 39"
   description: Sklep spożywczy
-  needs_verification: true # pod tym samym adresem figuruje też ABC po sąsiedzku
 - id: abc-po-sasiedzku
   name: ABC po sąsiedzku
   category: shops
   location: ksieze
   address: Chorzowska 10
   description: Sklep spożywczy
-  needs_verification: true
 - id: spolem-poludnie
   name: Społem „Południe”
   category: shops
@@ -88,7 +86,7 @@
   location: ksieze
   phone: "+48 577 837 133"
   description: Piekarnia
-  needs_verification: true # brak dokładnego adresu
+  needs_verification: true # brak adresu; w sieci widać tylko sieciowe Piekarnie Hert w innych częściach Wrocławia (Popowicka, Zwycięska, Legnicka, Solskiego...) — żadna nie zgadza się z tym numerem telefonu. Sprawdzić, czy ten punkt faktycznie jest na Księżu, czy usunąć wpis.
 - id: dialog-cafe
   name: Dialog Cafe by Samborini
   category: bakeries-cafes
@@ -313,7 +311,7 @@
   phone: "+48 669 684 566"
   description: Gabinet weterynaryjny
   tags: [weterynarz]
-  needs_verification: true
+  needs_verification: true # adres Tarnogórska 1 potwierdzony w sieci, ale znaleziony telefon recepcji to 71 341 64 18 — inny niż tu wpisany. Sprawdzić, który numer aktualnie obowiązuje.
 - id: vetlab
   name: Vetlab
   category: animals
@@ -467,6 +465,6 @@
   category: institutions
   location: ksieze
   address: Rybnicka 39-41
-  website: "mailto:ksieze@osiedla.wroclaw.pl"
-  description: Siedziba Samorządu Osiedla, dyżury radnych
-  needs_verification: true # dane z artykułu sprzed wyborów, sprawdzić godziny dyżurów
+  website: "https://radaksieze.pl/"
+  description: Siedziba Samorządu Osiedla. Dyżury radnych — wtorki 17:30–19:00
+  tags: [urząd, samorząd]
