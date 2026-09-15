@@ -1,0 +1,48 @@
+---
+import { getCollection } from "astro:content";
+import { formatPhoneDisplay, formatPhoneHref } from "../utils/phone";
+
+const emergencyNumbers = await getCollection("emergency");
+---
+
+<section class="emergency" aria-labelledby="emergency-heading">
+  <h2 id="emergency-heading">☎️ Ważne telefony</h2>
+  <ul class="emergency__list">
+    {emergencyNumbers.map(({ data }) => (
+      <li>
+        <span class="emergency__label">{data.label}</span>
+        {data.phone ? (
+          <a href={`tel:${formatPhoneHref(data.phone)}`}>{formatPhoneDisplay(data.phone)}</a>
+        ) : (
+          <span class="emergency__missing">do uzupełnienia</span>
+        )}
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .emergency__list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .emergency__list li {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-2) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .emergency__label {
+    color: var(--color-text-muted);
+  }
+
+  .emergency__missing {
+    color: var(--color-text-muted);
+    font-style: italic;
+  }
+</style>

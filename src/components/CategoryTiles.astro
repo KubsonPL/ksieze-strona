@@ -1,0 +1,61 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  categories: CollectionEntry<"categories">[];
+  countBySlug: Record<string, number>;
+}
+
+const { categories, countBySlug } = Astro.props;
+---
+
+<ul class="category-tiles">
+  {categories.map((cat) => (
+    <li>
+      <a class="category-tile" href={`/kategoria/${cat.data.slug}/`}>
+        <span class="category-tile__emoji" aria-hidden="true">{cat.data.emoji}</span>
+        <span class="category-tile__name">{cat.data.name}</span>
+        <span class="category-tile__count">{countBySlug[cat.data.slug] ?? 0}</span>
+      </a>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .category-tiles {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+    gap: var(--space-2);
+    margin-bottom: var(--space-5);
+  }
+
+  .category-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: var(--space-1);
+    text-decoration: none;
+    color: var(--color-text);
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: var(--space-3);
+    text-align: center;
+  }
+
+  .category-tile__emoji {
+    font-size: 1.75rem;
+  }
+
+  .category-tile__name {
+    font-size: 0.9rem;
+  }
+
+  .category-tile__count {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+  }
+</style>

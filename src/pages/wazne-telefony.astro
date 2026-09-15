@@ -1,0 +1,20 @@
+---
+import Base from "../layouts/Base.astro";
+import EmergencyPhones from "../components/EmergencyPhones.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<Base title="Ważne telefony" description="Numery alarmowe i ważne telefony dla mieszkańców osiedla Księże.">
+  <main class="container">
+    <p class="breadcrumb"><a href="/">← Strona główna</a></p>
+    <h1>Ważne telefony</h1>
+    <EmergencyPhones />
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .breadcrumb {
+    margin: var(--space-3) 0;
+  }
+</style>

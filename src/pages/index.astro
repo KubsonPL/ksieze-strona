@@ -1,0 +1,114 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../layouts/Base.astro";
+import SearchBar from "../components/SearchBar.astro";
+import CategoryTiles from "../components/CategoryTiles.astro";
+import PlaceCard from "../components/PlaceCard.astro";
+import EmergencyPhones from "../components/EmergencyPhones.astro";
+import ReportButton from "../components/ReportButton.astro";
+import Footer from "../components/Footer.astro";
+import { locationLabels, locationOrder } from "../utils/locations";
+
+const categories = (await getCollection("categories")).sort((a, b) =>
+  a.data.name.localeCompare(b.data.name, "pl"),
+);
+const places = await getCollection("places");
+
+const countBySlug: Record<string, number> = {};
+for (const place of places) {
+  countBySlug[place.data.category] = (countBySlug[place.data.category] ?? 0) + 1;
+}
+---
+
+<Base
+  title="Strona główna"
+  description="Katalog usług, sklepów i instytucji na osiedlu Księże we Wrocławiu."
+>
+  <main class="container">
+    <header class="page-header" id="zglos">
+      <h1>Księże – katalog usług i sklepów</h1>
+      <p>Znajdź weterynarza, fryzjera albo warzywniaka na osiedlu w kilka sekund.</p>
+      <ReportButton />
+    </header>
+
+    <SearchBar categories={categories} />
+    <CategoryTiles categories={categories} countBySlug={countBySlug} />
+
+    <h2 class="visually-hidden">Wszystkie wpisy według kategorii</h2>
+    {categories.map((cat) => {
+      const categoryPlaces = places.filter((place) => place.data.category === cat.data.slug);
+      if (categoryPlaces.length === 0) return null;
+
+      return (
+        <section class="category-group" data-category-slug={cat.data.slug}>
+          <h3>{cat.data.emoji} {cat.data.name}</h3>
+          {locationOrder.map((locationSlug) => {
+            const locationPlaces = categoryPlaces
+              .filter((place) => place.data.location === locationSlug)
+              .sort((a, b) => a.data.name.localeCompare(b.data.name, "pl"));
+            if (locationPlaces.length === 0) return null;
+
+            return (
+              <div class="location-group">
+                <h4>{locationLabels[locationSlug]}</h4>
+                <div class="place-grid">
+                  {locationPlaces.map((place) => (
+                    <PlaceCard
+                      name={place.data.name}
+                      address={place.data.address}
+                      phone={place.data.phone}
+                      website={place.data.website}
+                      description={place.data.description}
+                      tags={place.data.tags}
+                      needsVerification={place.data.needs_verification}
+                      category={place.data.category}
+                      location={place.data.location}
+                    />
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </section>
+      );
+    })}
+
+    <EmergencyPhones />
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .page-header {
+    margin: var(--space-4) 0;
+  }
+
+  .page-header p {
+    color: var(--color-text-muted);
+    margin-top: var(--space-1);
+  }
+
+  .category-group {
+    margin-bottom: var(--space-5);
+  }
+
+  .category-group h3 {
+    margin-bottom: var(--space-3);
+  }
+
+  .location-group {
+    margin-bottom: var(--space-3);
+  }
+
+  .location-group h4 {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-2);
+  }
+
+  .place-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+    gap: var(--space-2);
+  }
+</style>

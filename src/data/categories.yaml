@@ -1,0 +1,56 @@
+- id: shops
+  slug: shops
+  name: Sklepy i codzienne zakupy
+  emoji: "🛒"
+- id: bakeries-cafes
+  slug: bakeries-cafes
+  name: Piekarnie, cukiernie, kawiarnie
+  emoji: "🥐"
+- id: food
+  slug: food
+  name: Gastronomia i dowóz
+  emoji: "🍕"
+- id: beauty
+  slug: beauty
+  name: Fryzjer, barber i beauty
+  emoji: "💇"
+- id: health
+  slug: health
+  name: Zdrowie
+  emoji: "🏥"
+- id: animals
+  slug: animals
+  name: Zwierzęta
+  emoji: "🐾"
+- id: kids-education
+  slug: kids-education
+  name: Dzieci i edukacja
+  emoji: "👶"
+- id: sport
+  slug: sport
+  name: Sport i rekreacja
+  emoji: "⚽"
+- id: home-repairs
+  slug: home-repairs
+  name: Dom i remonty
+  emoji: "🔧"
+- id: small-services
+  slug: small-services
+  name: Usługi drobne (krawiec, szewc, klucze, pralnia)
+  emoji: "🧵"
+- id: automotive
+  slug: automotive
+  name: Motoryzacja
+  emoji: "🚗"
+- id: garden
+  slug: garden
+  name: Ogród i zieleń
+  emoji: "🌿"
+- id: post-parcels
+  slug: post-parcels
+  name: Poczta i paczki
+  emoji: "📦"
+- id: institutions
+  slug: institutions
+  name: Instytucje i wspólnota
+  emoji: "🏛️"

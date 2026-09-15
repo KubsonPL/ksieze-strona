@@ -1,0 +1,88 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import PlaceCard from "../../components/PlaceCard.astro";
+import Footer from "../../components/Footer.astro";
+import { locationLabels, locationOrder } from "../../utils/locations";
+
+export async function getStaticPaths() {
+  const categories = await getCollection("categories");
+  return categories.map((cat) => ({
+    params: { category: cat.data.slug },
+    props: { category: cat },
+  }));
+}
+
+const { category } = Astro.props;
+const allPlaces = await getCollection("places");
+const places = allPlaces.filter((place) => place.data.category === category.data.slug);
+---
+
+<Base
+  title={category.data.name}
+  description={`Lista miejsc w kategorii ${category.data.name} na osiedlu Księże i w okolicy.`}
+>
+  <main class="container">
+    <p class="breadcrumb"><a href="/">← Strona główna</a></p>
+    <h1>{category.data.emoji} {category.data.name}</h1>
+
+    {places.length === 0 ? (
+      <p class="empty-category">
+        Znasz kogoś godnego polecenia w tej kategorii? <a href="/#zglos">Zgłoś!</a>
+      </p>
+    ) : (
+      locationOrder.map((locationSlug) => {
+        const locationPlaces = places
+          .filter((place) => place.data.location === locationSlug)
+          .sort((a, b) => a.data.name.localeCompare(b.data.name, "pl"));
+        if (locationPlaces.length === 0) return null;
+
+        return (
+          <section class="location-section">
+            <h2>{locationLabels[locationSlug]}</h2>
+            <div class="place-grid">
+              {locationPlaces.map((place) => (
+                <PlaceCard
+                  name={place.data.name}
+                  address={place.data.address}
+                  phone={place.data.phone}
+                  website={place.data.website}
+                  description={place.data.description}
+                  tags={place.data.tags}
+                  needsVerification={place.data.needs_verification}
+                />
+              ))}
+            </div>
+          </section>
+        );
+      })
+    )}
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .breadcrumb {
+    margin: var(--space-3) 0;
+  }
+
+  .empty-category {
+    color: var(--color-text-muted);
+    margin: var(--space-4) 0;
+  }
+
+  .location-section {
+    margin: var(--space-4) 0;
+  }
+
+  .location-section h2 {
+    font-size: 1.1rem;
+    margin-bottom: var(--space-2);
+  }
+
+  .place-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+    gap: var(--space-2);
+  }
+</style>

@@ -1,0 +1,20 @@
+# Node
+node_modules/
+npm-debug.log*
+
+# Astro build output
+dist/
+.astro/
+
+# Env
+.env
+.env.production
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+
+# Wrangler
+.wrangler/

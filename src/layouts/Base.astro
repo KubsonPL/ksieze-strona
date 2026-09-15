@@ -1,0 +1,70 @@
+---
+import "../styles/global.css";
+import { siteConfig } from "../config";
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const pageTitle = `${title} | ${siteConfig.siteName}`;
+const canonicalUrl = new URL(Astro.url.pathname, siteConfig.siteUrl);
+---
+
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonicalUrl} />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:locale" content="pl_PL" />
+    <meta name="twitter:card" content="summary" />
+  </head>
+  <style>
+    .site-nav {
+      border-bottom: 1px solid var(--color-border);
+      background: var(--color-bg-elevated);
+    }
+
+    .site-nav__inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-2) var(--space-3);
+      flex-wrap: wrap;
+      gap: var(--space-2);
+    }
+
+    .site-nav__brand {
+      font-weight: 700;
+      text-decoration: none;
+      color: var(--color-text);
+    }
+
+    .site-nav a {
+      text-decoration: none;
+    }
+
+    .site-nav a:hover {
+      text-decoration: underline;
+    }
+  </style>
+  <body>
+    <nav class="site-nav">
+      <div class="container site-nav__inner">
+        <a class="site-nav__brand" href="/">{siteConfig.siteName}</a>
+        <a href="/wazne-telefony/">☎️ Ważne telefony</a>
+      </div>
+    </nav>
+    <slot />
+  </body>
+</html>

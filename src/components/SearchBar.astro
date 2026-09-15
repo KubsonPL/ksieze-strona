@@ -1,0 +1,101 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  categories: CollectionEntry<"categories">[];
+}
+
+const { categories } = Astro.props;
+---
+
+<div class="search-bar">
+  <input
+    type="search"
+    id="search-input"
+    class="search-bar__input"
+    placeholder="Szukaj: nazwa, opis, tag, adres…"
+    aria-label="Szukaj miejsca"
+  />
+  <select id="category-filter" class="search-bar__select" aria-label="Filtruj po kategorii">
+    <option value="">Wszystkie kategorie</option>
+    {categories.map((cat) => (
+      <option value={cat.data.slug}>{cat.data.emoji} {cat.data.name}</option>
+    ))}
+  </select>
+  <select id="location-filter" class="search-bar__select" aria-label="Filtruj po lokalizacji">
+    <option value="">Wszystkie lokalizacje</option>
+    <option value="ksieze">🏠 Na Księżu</option>
+    <option value="nearby">📍 W pobliżu</option>
+    <option value="mobile">🚐 Z dojazdem</option>
+  </select>
+  <p id="no-results" class="search-bar__no-results" hidden>Nie znaleziono żadnego wpisu.</p>
+</div>
+
+<style>
+  .search-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+  }
+
+  .search-bar__input,
+  .search-bar__select {
+    flex: 1 1 16rem;
+    min-width: 0;
+    max-width: 100%;
+    padding: var(--space-2);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--color-bg-elevated);
+    color: var(--color-text);
+  }
+
+  .search-bar__no-results {
+    width: 100%;
+    color: var(--color-text-muted);
+  }
+</style>
+
+<script>
+  import { normalizeForSearch } from "../utils/search";
+
+  const searchInput = document.getElementById("search-input") as HTMLInputElement;
+  const categoryFilter = document.getElementById("category-filter") as HTMLSelectElement;
+  const locationFilter = document.getElementById("location-filter") as HTMLSelectElement;
+  const noResults = document.getElementById("no-results") as HTMLElement;
+
+  function applyFilters() {
+    const query = normalizeForSearch(searchInput.value.trim());
+    const category = categoryFilter.value;
+    const location = locationFilter.value;
+
+    const cards = document.querySelectorAll<HTMLElement>(".place-card");
+    let visibleCount = 0;
+
+    cards.forEach((card) => {
+      const matchesQuery = query === "" || (card.dataset.search ?? "").includes(query);
+      const matchesCategory = category === "" || card.dataset.category === category;
+      const matchesLocation = location === "" || card.dataset.location === location;
+      const visible = matchesQuery && matchesCategory && matchesLocation;
+      card.hidden = !visible;
+      if (visible) visibleCount += 1;
+    });
+
+    document.querySelectorAll<HTMLElement>(".category-group").forEach((group) => {
+      const hasVisibleCard = group.querySelector(".place-card:not([hidden])") !== null;
+      group.hidden = !hasVisibleCard;
+    });
+
+    document.querySelectorAll<HTMLElement>(".location-group").forEach((group) => {
+      const hasVisibleCard = group.querySelector(".place-card:not([hidden])") !== null;
+      group.hidden = !hasVisibleCard;
+    });
+
+    noResults.hidden = visibleCount > 0;
+  }
+
+  searchInput.addEventListener("input", applyFilters);
+  categoryFilter.addEventListener("change", applyFilters);
+  locationFilter.addEventListener("change", applyFilters);
+</script>

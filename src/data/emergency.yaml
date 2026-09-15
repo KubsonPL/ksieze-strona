@@ -1,0 +1,18 @@
+- id: numer-alarmowy
+  label: Numer alarmowy
+  phone: "112"
+- id: straz-miejska
+  label: Straż Miejska
+  phone: "986"
+- id: pogotowie-energetyczne
+  label: Pogotowie energetyczne
+  phone: "991"
+- id: pogotowie-gazowe
+  label: Pogotowie gazowe
+  phone: "992"
+- id: dzielnicowy
+  label: Dzielnicowy
+  phone: ""
+- id: awarie-wodociagowe
+  label: Awarie wodociągowe MPWiK
+  phone: ""
